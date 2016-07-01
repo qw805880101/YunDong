@@ -16,10 +16,10 @@
 
 
     <!-- register_string -->
-    <string name="rg_phone_number">手机号&#160;&#160;</string>
+    <string name="rg_phone_number">手机号&#160;&#160;&#160;</string>
     <string name="rg_get_code">获取验证码</string>
-    <string name="rg_code">验证码&#160;&#160;</string>
-    <string name="rg_password">密&#160;&#160;&#160;&#160;码&#160;&#160;</string>
+    <string name="rg_code">验证码&#160;&#160;&#160;</string>
+    <string name="rg_password">密&#160;&#160;&#160;&#160;码&#160;&#160;&#160;</string>
     <string name="rg_code_hint">请输入短信收到的验证码</string>
     <string name="rg_password2">确认密码</string>
     <string name="rg_password2_hint">请再次输入密码</string>

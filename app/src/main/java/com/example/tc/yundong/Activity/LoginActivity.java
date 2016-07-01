@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +18,20 @@ import com.zhy.autolayout.AutoLinearLayout;
  * Created by tc on 2016/7/1.
  */
 public class LoginActivity extends Activity implements View.OnClickListener {
-
     private EditText et_account = null, et_password = null;
 
     private Button bt_login = null;
+
+    private ImageButton imbt_back = null;
+
+    private TextView tx_title = null;
+
     private TextView tx_wangji = null;
 
     private AutoLinearLayout lin_wb_login = null, lin_qq_login = null, lin_wx_login = null;
 
     private String account = "";
+
     private String password = "";
 
     @Override
@@ -36,6 +42,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
+        imbt_back = (ImageButton) findViewById(R.id.bt_title_back);
+        imbt_back.setOnClickListener(this);
+        tx_title = (TextView) findViewById(R.id.tx_title);
+        tx_title.setText("登录");
         et_account = (EditText) findViewById(R.id.et_account);
         et_password = (EditText) findViewById(R.id.et_password);
         bt_login = (Button) findViewById(R.id.bt_login);
@@ -52,16 +62,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == bt_login){
+        if (v == bt_login) {
             login();
-        } else if (v == tx_wangji){
+        } else if (v == tx_wangji) {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            this.startActivity(intent);
+        } else if (v == lin_wb_login) {
 
-        } else if (v == lin_wb_login){
+        } else if (v == lin_qq_login) {
 
-        } else if (v == lin_qq_login){
+        } else if (v == lin_wx_login) {
 
-        } else if (v == lin_wx_login){
-
+        } else if (v == imbt_back) {
+            this.finish();
         }
     }
 
@@ -71,14 +84,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void login() {
         account = et_account.getText().toString().trim();
         password = et_password.getText().toString().trim();
-        if (account == null && account.equals("")){
+        if (account.equals("")) {
             Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
             return;
-        } else if (password == null && password.equals("")){
+        } else if (account.length() < 11) {
+            Toast.makeText(this, "手机号长度至少11位", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (password.equals("")) {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
+        } else if (password.length() < 6 && password.length() > 20) {
+            Toast.makeText(this, "密码长度应该在6-20位之间", Toast.LENGTH_SHORT).show();
+            return;
         }
-        Intent intent = new Intent(this, RegisterActivity.class);
-        this.startActivity(intent);
     }
 }

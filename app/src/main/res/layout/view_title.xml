@@ -5,7 +5,7 @@
                 android:background="@color/lg_584f60">
 
     <ImageButton
-        android:id="@+id/bt_title_left"
+        android:id="@+id/bt_title_back"
         android:layout_width="150px"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -16,6 +16,7 @@
 
 
     <TextView
+        android:id="@+id/tx_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
