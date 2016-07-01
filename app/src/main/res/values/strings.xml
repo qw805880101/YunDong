@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">YunDong</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- login_string -->
+    <string name="lg_account_number">账号</string>
+    <string name="lg_account_number_hint">请输入手机号</string>
+    <string name="lg_password">密码</string>
+    <string name="lg_password_hint">请输入密码</string>
+    <string name="lg_login">登录</string>
+    <string name="lg_wangji"><u>忘记密码</u></string>
+    <string name="lg_lgtype">其他登录方式</string>
+    <string name="lg_wb">微博</string>
+    <string name="lg_qq">QQ</string>
+    <string name="lg_wx">微信</string>
+
+
+    <!-- register_string -->
+    <string name="rg_phone_number">手机号&#160;&#160;</string>
+    <string name="rg_get_code">获取验证码</string>
+    <string name="rg_code">验证码&#160;&#160;</string>
+    <string name="rg_password">密&#160;&#160;&#160;&#160;码&#160;&#160;</string>
+    <string name="rg_code_hint">请输入短信收到的验证码</string>
+    <string name="rg_password2">确认密码</string>
+    <string name="rg_password2_hint">请再次输入密码</string>
+    <string name="rg_next">下一步</string>
+
+
+</resources>

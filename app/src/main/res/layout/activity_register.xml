@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="match_parent"
+                                     android:background="@color/lg_d1d1d1"
+                                     android:orientation="vertical">
+
+    <include layout="@layout/view_title"/>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_marginBottom="50px"
+        android:layout_marginTop="50px"
+        android:background="@color/lg_ffffff"
+        >
+
+        <TextView
+            android:id="@+id/tx_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="30px"
+            android:gravity="center_vertical"
+            android:text="@string/rg_phone_number"
+            android:textColor="@color/lg_000000"
+            android:textSize="44px"
+            />
+
+        <Button
+            android:id="@+id/bt_getcode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="30px"
+            android:background="@drawable/bt_rg"
+            android:text="@string/rg_get_code"
+            android:textColor="@color/lg_ffffff"
+            android:textSize="33px"
+            />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/bt_getcode"
+            android:layout_toRightOf="@id/tx_phone"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/lg_account_number_hint"
+            android:inputType="phone"
+            android:textColor="@color/lg_d1d1d1"
+            android:textSize="44px"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_marginBottom="20px"
+        android:background="@color/lg_ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="30px"
+            android:gravity="center_vertical"
+            android:text="@string/rg_code"
+            android:textColor="@color/lg_000000"
+            android:textSize="44px"
+            />
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/rg_code_hint"
+            android:inputType="number"
+            android:textColor="@color/lg_d1d1d1"
+            android:textSize="44px"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_marginBottom="20px"
+        android:background="@color/lg_ffffff"
+        >
+
+        <TextView
+            android:id="@+id/tx_pas"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="30px"
+            android:gravity="center_vertical"
+            android:text="@string/rg_password"
+            android:textColor="@color/lg_000000"
+            android:textSize="44px"
+            />
+
+        <ImageView
+            android:id="@+id/image_eyes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="30px"
+            android:src="@mipmap/eyes"
+            />
+
+        <EditText
+            android:id="@+id/et_password_rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/image_eyes"
+            android:layout_toRightOf="@id/tx_pas"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/lg_password_hint"
+            android:inputType="textPassword"
+            android:textColor="@color/lg_d1d1d1"
+            android:textSize="44px"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:background="@color/lg_ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="30px"
+            android:gravity="center_vertical"
+            android:text="@string/rg_password2"
+            android:textColor="@color/lg_000000"
+            android:textSize="44px"
+            />
+
+        <EditText
+            android:id="@+id/et_password2_rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/rg_password2_hint"
+            android:inputType="textPassword"
+            android:textColor="@color/lg_d1d1d1"
+            android:textSize="44px"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/rg_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="70px"
+        android:background="@drawable/bt_lg"
+        android:text="@string/rg_next"
+        android:textColor="@color/lg_ffffff"
+        android:textSize="44px"
+        />
+
+
+</com.zhy.autolayout.AutoLinearLayout>
