@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tc.yundong.Async.Asyn_Register;
+import com.example.tc.yundong.Async.Asyn_SendCode;
 import com.example.tc.yundong.R;
 import com.example.tc.yundong.Util.Info;
 import com.example.tc.yundong.Util.MD5Util;
@@ -82,6 +83,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(this, "手机号长度至少11位", Toast.LENGTH_SHORT).show();
                 return;
             }
+            Map<String, String> map = new HashMap<>();
+            map.put("phone", phone);
+            new Asyn_SendCode(map).execute();
             time.start();//开始计时
         } else if (v == bt_Next) {
             next();

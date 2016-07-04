@@ -33,8 +33,6 @@ public class Asyn_Login extends AsyncTask<Integer, Integer, UserLogin> {
     protected void onPostExecute(UserLogin userLogin) {
         if (userLogin != null) {
 
-
-
         } else {
             if (!Info.Erro.equals("")) {
                 Toast.makeText(Info.currentActivity, Info.Erro, Toast.LENGTH_SHORT).show();
