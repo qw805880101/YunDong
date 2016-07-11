@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tc.yundong.R;
+import com.example.tc.yundong.Util.Utils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 /**
@@ -85,16 +85,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         account = et_account.getText().toString().trim();
         password = et_password.getText().toString().trim();
         if (account.equals("")) {
-            Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请输入手机号");
             return;
         } else if (account.length() < 11) {
-            Toast.makeText(this, "手机号长度至少11位", Toast.LENGTH_SHORT).show();
+            Utils.Toast("手机号长度至少11位");
             return;
         } else if (password.equals("")) {
-            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请输入密码");
             return;
-        } else if (password.length() < 6 && password.length() > 20) {
-            Toast.makeText(this, "密码长度应该在6-20位之间", Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 6 || password.length() > 20) {
+            Utils.Toast("密码长度应该在6-20位之间");
+
             return;
         }
     }

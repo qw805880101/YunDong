@@ -18,10 +18,7 @@ public class Asyn_SendCode extends AsyncTask<Integer, Integer, SendCode> {
 
     public Asyn_SendCode(Map<String, String> map) {
         url = Info.Url + "user/sendCode.do?";
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            url += entry.getKey() + "=" + entry.getValue() + "&";
-        }
-        url += "key" + Info.key;
+        url = Utils.getUrl(url, map);
         Utils.Log("url = " + url);
     }
 
@@ -40,7 +37,7 @@ public class Asyn_SendCode extends AsyncTask<Integer, Integer, SendCode> {
             }
         } else {
             if (!Info.Erro.equals("")) {
-                Toast.makeText(Info.currentActivity, Info.Erro, Toast.LENGTH_SHORT).show();
+                Utils.Toast(Info.Erro);
                 Utils.Log("错误~~~~~~~~~~~~~~~~~" + Info.Erro);
             }
         }

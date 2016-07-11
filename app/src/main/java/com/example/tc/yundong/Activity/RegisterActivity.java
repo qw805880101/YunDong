@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tc.yundong.Async.Asyn_Register;
 import com.example.tc.yundong.Async.Asyn_SendCode;
 import com.example.tc.yundong.R;
 import com.example.tc.yundong.Util.Info;
 import com.example.tc.yundong.Util.MD5Util;
+import com.example.tc.yundong.Util.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,10 +77,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             getCodeType = true;
             phone = et_Phone.getText().toString().trim();
             if (phone.equals("")) {
-                Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+                Utils.Toast("请输入密码");
                 return;
             } else if (phone.length() < 11) {
-                Toast.makeText(this, "手机号长度至少11位", Toast.LENGTH_SHORT).show();
+                Utils.Toast("手机号长度至少11位");
                 return;
             }
             Map<String, String> map = new HashMap<>();
@@ -110,31 +110,31 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         password = et_Password.getText().toString().trim();
         password2 = et_Password2.getText().toString().trim();
         if (phone.equals("")) {
-            Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请输入手机号码");
             return;
         } else if (!getCodeType) {
-            Toast.makeText(this, "请先获取验证码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请先获取验证码");
             return;
         } else if (phone.length() < 11) {
-            Toast.makeText(this, "手机号长度至少11位", Toast.LENGTH_SHORT).show();
+            Utils.Toast("手机号长度至少11位");
             return;
         } else if (code.equals("")) {
-            Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请输入验证码");
             return;
         } else if (code.length() < 6) {
-            Toast.makeText(this, "验证码为6位纯数字", Toast.LENGTH_SHORT).show();
+            Utils.Toast("验证码为6位纯数字");
             return;
         } else if (password.equals("")) {
-            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请输入密码");
             return;
-        } else if (password.length() < 6 && password.length() > 20) {
-            Toast.makeText(this, "密码长度应该在6-20位之间", Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 6 || password.length() > 20) {
+            Utils.Toast("密码长度应该在6-20位之间");
             return;
         } else if (password2.equals("")) {
-            Toast.makeText(this, "请再次输入密码", Toast.LENGTH_SHORT).show();
+            Utils.Toast("请再次输入密码");
             return;
         } else if (!password.equals(password2)) {
-            Toast.makeText(this, "两次密码输入不一致，请重新输入", Toast.LENGTH_SHORT).show();
+            Utils.Toast("两次密码输入不一致，请重新输入");
             return;
         }
         Map<String, String> map = new HashMap<>();

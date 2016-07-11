@@ -44,5 +44,6 @@ public class MyApplication extends Application {
         ImageLoader.getInstance().init(imageLoaderConfiguration);
         Info.date = Utils.getTodayNews();
         AutoLayoutConifg.getInstance().useDeviceSize();
+        Utils.initialize(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.tc.yundong.Async;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.example.tc.yundong.Http.HttpUtils;
 import com.example.tc.yundong.JavaBeen.Register;
@@ -19,10 +18,7 @@ public class Asyn_Register extends AsyncTask<Integer, Integer, Register> {
 
     public Asyn_Register(Map<String, String> map) {
         url = Info.Url + "user/reg.do?";
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            url += entry.getKey() + "=" + entry.getValue() + "&";
-        }
-        url += "key" + Info.key;
+        url = Utils.getUrl(url, map);
         Utils.Log("url = " + url);
     }
 
@@ -34,14 +30,15 @@ public class Asyn_Register extends AsyncTask<Integer, Integer, Register> {
     protected void onPostExecute(Register register) {
         if (register != null) {
             if (register.getStatus() == 0) { //注册失败
-                Toast.makeText(Info.currentActivity, register.getMsg(), Toast.LENGTH_SHORT).show();
+                Utils.Toast(register.getMsg());
                 return;
             } else if (register.getStatus() == 1) { //注册成功
-                Toast.makeText(Info.currentActivity, register.getMsg(), Toast.LENGTH_SHORT).show();
+                Utils.Toast(register.getMsg());
+
             }
         } else {
             if (!Info.Erro.equals("")) {
-                Toast.makeText(Info.currentActivity, Info.Erro, Toast.LENGTH_SHORT).show();
+                Utils.Toast(Info.Erro);
                 Utils.Log("错误~~~~~~~~~~~~~~~~~" + Info.Erro);
             }
         }
