@@ -1,6 +1,5 @@
 package com.example.tc.yundong.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +16,7 @@ import com.zhy.autolayout.AutoLinearLayout;
  * 登录界面
  * Created by tc on 2016/7/1.
  */
-public class LoginActivity extends Activity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText et_account = null, et_password = null;
 
     private Button bt_login = null;
@@ -47,7 +46,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         tx_title = (TextView) findViewById(R.id.tx_title);
         tx_title.setText("登录");
         et_account = (EditText) findViewById(R.id.et_account);
+        et_account.setText("11111111111");
         et_password = (EditText) findViewById(R.id.et_password);
+        et_password.setText("123456");
         bt_login = (Button) findViewById(R.id.bt_login);
         bt_login.setOnClickListener(this);
         tx_wangji = (TextView) findViewById(R.id.tx_wangji);
@@ -95,8 +96,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             return;
         } else if (password.length() < 6 || password.length() > 20) {
             Utils.Toast("密码长度应该在6-20位之间");
-
             return;
         }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 }

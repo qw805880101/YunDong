@@ -3,6 +3,10 @@ package com.example.tc.yundong;
 
 import android.app.Application;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.example.tc.yundong.Util.Info;
 import com.example.tc.yundong.Util.Utils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -19,6 +23,10 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
 import java.io.File;
 
 public class MyApplication extends Application {
+
+    public LocationClient mLocationClient = null;
+    public BDLocationListener myListener = new MyLocationListener();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,12 +46,52 @@ public class MyApplication extends Application {
                 .discCacheFileCount(100) //缓存的文件数量
                 .discCache(new UnlimitedDiskCache(cacheDir))
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-                .imageDownloader(new BaseImageDownloader(getApplicationContext(), 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)
+                .imageDownloader(new BaseImageDownloader(getApplicationContext(), 5 * 1000, 30 * 1000)) //
+                // connectTimeout (5 s), readTimeout (30 s)
                 .writeDebugLogs() // Remove for release app
                 .build();
         ImageLoader.getInstance().init(imageLoaderConfiguration);
         Info.date = Utils.getTodayNews();
-        AutoLayoutConifg.getInstance().useDeviceSize();
-        Utils.initialize(this);
+        AutoLayoutConifg.getInstance().useDeviceSize(); //AutoLayout初始化
+        Utils.initialize(this); //设置Application
+        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+        initLocation();
+        mLocationClient.start();
+    }
+
+    private void initLocation() {  //详细定位
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式
+        option.setCoorType("gcj02");// 返回的定位结果是百度经纬度，默认值gcj02
+        int span = 500;
+        option.setScanSpan(span);// 设置发起定位请求的间隔时间为500ms,小于1000时不重复定位
+        option.setIsNeedAddress(true);
+        mLocationClient.setLocOption(option);
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //Receive Location
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+                Utils.Toast("当前城市：" + location.getCity());
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                //运营商信息
+                Utils.Toast("当前城市：" + location.getCity());
+            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+                Utils.Toast("当前城市：" + location.getCity());
+            } else if (location.getLocType() == BDLocation.TypeServerError) {
+                Utils.Toast("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+                Utils.Toast("网络不同导致定位失败，请检查网络是否通畅");
+            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+                Utils.Toast("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+            } else {
+                Utils.Toast("定位失败，错误码" + location.getLocType());
+            }
+            mLocationClient.stop();
+        }
     }
 }

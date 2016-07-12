@@ -1,6 +1,5 @@
 package com.example.tc.yundong.Activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.method.HideReturnsTransformationMethod;
@@ -26,7 +25,7 @@ import java.util.Map;
  * 注册 界面
  * Created by tc on 2016/7/1.
  */
-public class RegisterActivity extends Activity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText et_Phone = null, et_Code = null, et_Password = null, et_Password2 = null;
 
@@ -77,7 +76,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             getCodeType = true;
             phone = et_Phone.getText().toString().trim();
             if (phone.equals("")) {
-                Utils.Toast("请输入密码");
+                Utils.Toast("请输入手机号码");
                 return;
             } else if (phone.length() < 11) {
                 Utils.Toast("手机号长度至少11位");
