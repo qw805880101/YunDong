@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 /**
+ * 带导航点的viewpage
  * Created by tc on 2016/6/1.
  */
 public class MetaballView extends ViewPager {
@@ -28,6 +29,24 @@ public class MetaballView extends ViewPager {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawCycle(canvas);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        int height = 0;
+//        //下面遍历所有child的高度
+//        for (int i = 0; i < getChildCount(); i++) {
+//            View child = getChildAt(i);
+//            child.getHeight();
+//            child.measure(widthMeasureSpec,
+//                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+//            int h = child.getMeasuredHeight();
+//            if (h > height) //采用最大的view的高度。
+//                height = h;
+//        }
+//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
+//                MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     //画笔画小圆点

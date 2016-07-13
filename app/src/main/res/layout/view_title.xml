@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:background="@color/lg_584f60">
+                                       android:layout_width="match_parent"
+                                       android:layout_height="150px"
+                                       android:background="@color/lg_584f60">
 
     <ImageButton
         android:id="@+id/bt_title_back"
@@ -12,8 +12,8 @@
         android:background="@null"
         android:gravity="center"
         android:src="@mipmap/to_left"
+        android:visibility="gone"
         />
-
 
     <TextView
         android:id="@+id/tx_title"
@@ -24,6 +24,34 @@
         android:text="登录"
         android:textColor="@color/lg_ffffff"
         android:textSize="50px"
+        android:visibility="gone"
         />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_city"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tx_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="上海"
+            android:textSize="50px"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/tx_city"
+            android:src="@mipmap/to_left"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
 
 </com.zhy.autolayout.AutoRelativeLayout>

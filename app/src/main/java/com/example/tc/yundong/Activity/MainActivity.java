@@ -2,7 +2,6 @@ package com.example.tc.yundong.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,23 +24,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // 当前fragment的index
     private int currentTabIndex;
 
-    FragmentManager fm = getSupportFragmentManager();
-    FragmentTransaction ft = fm.beginTransaction();
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initTitleBar();
+        initFragment();
         init();
     }
 
-    private void init() {
+    private void initFragment(){
+        //初始化 各个模块
         homefragment = new VenueFragment();
         contactlistfragment = new VenueFragment();
         findfragment = new VenueFragment();
         profilefragment = new VenueFragment();
         fragments = new Fragment[]{homefragment, contactlistfragment,
                 findfragment, profilefragment};
+    }
+
+    private void initTitleBar(){
+        textView = (TextView) findViewById(R.id.tx_title);
+
+    }
+
+    private void init() {
         imagebuttons = new ImageView[4];
         imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
         imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);

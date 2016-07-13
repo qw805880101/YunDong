@@ -7,6 +7,8 @@
     android:orientation="vertical"
     >
 
+    <include layout="@layout/view_title"/>
+
     <RelativeLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"
@@ -47,7 +49,7 @@
                 android:layout_below="@id/ib_weixin"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
-                android:text="微信"
+                android:text="场馆"
                 android:textColor="#9A9A9A"
                 android:textSize="12sp"/>
 
@@ -57,9 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:background="@mipmap/unread_count_bg"
                 android:gravity="center"
-                android:text="7"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"/>
         </RelativeLayout>
@@ -89,7 +89,7 @@
                 android:layout_below="@id/ib_contact_list"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
-                android:text="通讯录"
+                android:text="约练"
                 android:textColor="#9A9A9A"
                 android:textSize="12sp"/>
 
@@ -130,7 +130,7 @@
                 android:layout_below="@id/ib_find"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
-                android:text="发现"
+                android:text="运动圈"
                 android:textColor="#9A9A9A"
                 android:textSize="12sp"/>
         </RelativeLayout>
@@ -160,7 +160,7 @@
                 android:layout_below="@id/ib_profile"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
-                android:text="我"
+                android:text="我的"
                 android:textColor="#9A9A9A"
                 android:textSize="12sp"/>
         </RelativeLayout>
