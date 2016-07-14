@@ -17,9 +17,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView[] imagebuttons;
     private TextView[] textviews;
     private VenueFragment homeFragment;
-    private VenueFragment showFragment;
-    private VenueFragment sportsFragment;
-    private VenueFragment myFragment;
+//    private VenueFragment showFragment;
+//    private VenueFragment sportsFragment;
+//    private VenueFragment myFragment;
 
     private AutoRelativeLayout rl_home_title, rl_show_title, rl_sports_title, rl_my_title;
 
@@ -41,26 +41,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initFragment() {
         //初始化 各个模块
         homeFragment = new VenueFragment();
-        showFragment = new VenueFragment();
-        sportsFragment = new VenueFragment();
-        myFragment = new VenueFragment();
-        fragments = new Fragment[]{homeFragment, showFragment,
-                sportsFragment, myFragment};
+//        showFragment = new VenueFragment();
+//        sportsFragment = new VenueFragment();
+//        myFragment = new VenueFragment();
+        fragments = new Fragment[]{homeFragment};
     }
 
     private void initTitleBar() {
         rl_home_title = (AutoRelativeLayout) findViewById(R.id.rl_main_home_title);
         rl_home_title.setVisibility(View.VISIBLE);
-
         textView = (TextView) findViewById(R.id.tx_title);
     }
 
     private void init() {
         imagebuttons = new ImageView[4];
-        imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
-        imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);
-        imagebuttons[2] = (ImageView) findViewById(R.id.ib_find);
-        imagebuttons[3] = (ImageView) findViewById(R.id.ib_profile);
+        imagebuttons[0] = (ImageView) findViewById(R.id.ib_home);
+        imagebuttons[1] = (ImageView) findViewById(R.id.ib_show);
+        imagebuttons[2] = (ImageView) findViewById(R.id.ib_sports);
+        imagebuttons[3] = (ImageView) findViewById(R.id.ib_my);
         imagebuttons[0].setSelected(true);
 
         textviews = new TextView[4];
@@ -69,19 +67,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textviews[2] = (TextView) findViewById(R.id.tv_find);
         textviews[3] = (TextView) findViewById(R.id.tv_profile);
         textviews[0].setTextColor(0xFF486BA5);
-        findViewById(R.id.re_weixin).setOnClickListener(this);
-        findViewById(R.id.re_contact_list).setOnClickListener(this);
-        findViewById(R.id.re_find).setOnClickListener(this);
-        findViewById(R.id.re_profile).setOnClickListener(this);
+        findViewById(R.id.rl_home).setOnClickListener(this);
+        findViewById(R.id.rl_show).setOnClickListener(this);
+        findViewById(R.id.rl_sports).setOnClickListener(this);
+        findViewById(R.id.rl_my).setOnClickListener(this);
 
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.realtabcontent, homeFragment)
-                .add(R.id.realtabcontent, showFragment)
-                .add(R.id.realtabcontent, sportsFragment)
-                .add(R.id.realtabcontent, myFragment)
-                .hide(showFragment).hide(sportsFragment)
-                .hide(myFragment).show(homeFragment).commit();
+                .show(homeFragment).commit();
     }
 
     public void onTabClicked() {
@@ -106,18 +100,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.re_weixin:
+            case R.id.rl_home:
                 index = 0;
                 rl_home_title.setVisibility(View.VISIBLE);
                 break;
-            case R.id.re_contact_list:
+            case R.id.rl_show:
                 index = 1;
                 rl_home_title.setVisibility(View.GONE);
                 break;
-            case R.id.re_find:
+            case R.id.rl_sports:
                 index = 2;
                 break;
-            case R.id.re_profile:
+            case R.id.rl_my:
                 index = 3;
                 break;
         }

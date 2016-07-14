@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.tc.yundong.JavaBeen.Stadiums;
 import com.example.tc.yundong.R;
+import com.example.tc.yundong.Util.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -28,23 +30,24 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(View.inflate(mContext, R.layout.item_changguan, null));
+        ViewHolder holder = new ViewHolder(View.inflate(mContext, R.layout.item_stadium, null));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(MyRecyclerViewAdapter.ViewHolder holder, int position) {
-//        holder.tx_changdi_name.setText(arrs.get(position).getName());
-//        holder.tx_changdi_address.setText("[" + arrs.get(position).getAddress() + "]");
-//        holder.tx_changdi_money.setText("￥" + arrs.get(position).getMoney());
+        Stadiums stadiums = arrs.get(position);
+        holder.tx_stadium_name.setText(stadiums.getName());
+        holder.tx_stadium_address.setText("[" + stadiums.getAddress() + "]");
+        holder.tx_stadium_money.setText("￥" + stadiums.getAvgprice());
 //        holder.tx_km.setText(">" + arrs.get(position).getKm());
-        holder.iamge.setImageResource(arrs.get(position).getImageUrl());
-//        holder.bt_yuding.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        ImageLoader.getInstance().displayImage(Utils.getPhotoUrl(stadiums.getPic()), holder.stadiumIamge);
+        holder.bt_yuding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -53,22 +56,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iamge;
-        TextView tx_changdi_name;
-        TextView tx_changdi_address;
-        TextView tx_changdi_money;
+        ImageView stadiumIamge;
+        TextView tx_stadium_name;
+        TextView tx_stadium_address;
+        TextView tx_stadium_money;
         TextView tx_km;
         Button bt_yuding;
 
         public ViewHolder(View itemView) {
             super(itemView);
             AutoUtils.autoSize(itemView);
-            iamge = (ImageView) itemView.findViewById(R.id.item_image);
-//            tx_changdi_name = (TextView) itemView.findViewById(R.id.tx_changdi_name);
-//            tx_changdi_address = (TextView) itemView.findViewById(R.id.tx_changdi_address);
-//            tx_changdi_money = (TextView) itemView.findViewById(R.id.tx_changdi_money);
-//            tx_km = (TextView) itemView.findViewById(R.id.tx_km);
-//            bt_yuding = (Button) itemView.findViewById(R.id.bt_yuding);
+            stadiumIamge = (ImageView) itemView.findViewById(R.id.item_stadium_image);
+            tx_stadium_name = (TextView) itemView.findViewById(R.id.tx_stadium_name);
+            tx_stadium_address = (TextView) itemView.findViewById(R.id.tx_stadium_address);
+            tx_stadium_money = (TextView) itemView.findViewById(R.id.tx_stadium_money);
+            tx_km = (TextView) itemView.findViewById(R.id.tx_km);
+            bt_yuding = (Button) itemView.findViewById(R.id.bt_yuding);
         }
     }
 }

@@ -21,7 +21,7 @@ public class Utils {
     private final static String TAG = "tcc";
     private static Context mApplicationContent;
 
-    public static void initialize(Application app){
+    public static void initialize(Application app) {
         mApplicationContent = app.getApplicationContext();
     }
 
@@ -29,7 +29,7 @@ public class Utils {
         android.util.Log.i(TAG, msg);
     }
 
-    public static void Toast(String str){
+    public static void Toast(String str) {
         Toast.makeText(mApplicationContent, str, Toast.LENGTH_SHORT).show();
     }
 
@@ -49,12 +49,13 @@ public class Utils {
 
     /**
      * 关闭输入法
+     *
      * @param act
      */
-    public static void closeInputMethod(Activity act){
+    public static void closeInputMethod(Activity act) {
         View view = act.getCurrentFocus();
-        if(view!=null){
-            ((InputMethodManager)mApplicationContent.getSystemService(Context.INPUT_METHOD_SERVICE)).
+        if (view != null) {
+            ((InputMethodManager) mApplicationContent.getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
@@ -86,6 +87,7 @@ public class Utils {
 
     /**
      * 获取当前时间
+     *
      * @return
      */
     @SuppressLint("SimpleDateFormat")
@@ -98,6 +100,7 @@ public class Utils {
 
     /**
      * 日期转换
+     *
      * @param str 日期，格式为String："20130903";
      * @return
      */
@@ -137,14 +140,26 @@ public class Utils {
     }
 
     /**
-     * 获取url
+     * 获取url地址
      */
     public static String getUrl(String url, Map<String, String> map) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            url += entry.getKey() + "=" + entry.getValue() + "&";
+        if (map != null) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                url += entry.getKey() + "=" + entry.getValue() + "&";
+            }
         }
-        url += "key" + Info.key;
+        url += "key=" + Info.key;
         return url;
+    }
+
+    /**
+     * 获取图片地址
+     * @param url 图片地址后缀
+     * @return
+     */
+    public static String getPhotoUrl(String url) {
+        String photoUrl = "http://114.55.42.10:9000/ptcent_file_upload/sportsweb" + url;
+        return photoUrl;
     }
 
     /**

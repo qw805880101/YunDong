@@ -1,7 +1,11 @@
 package com.example.tc.yundong.Activity.Venue;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,6 +21,8 @@ import android.widget.GridView;
 import com.example.tc.yundong.Adapter.MyGridViewAdapter;
 import com.example.tc.yundong.Adapter.MyPagerAdapter;
 import com.example.tc.yundong.Adapter.MyRecyclerViewAdapter;
+import com.example.tc.yundong.Async.Asyn_GetHomeData;
+import com.example.tc.yundong.JavaBeen.HomeData;
 import com.example.tc.yundong.JavaBeen.SportsType;
 import com.example.tc.yundong.JavaBeen.Stadiums;
 import com.example.tc.yundong.R;
@@ -49,25 +55,35 @@ public class VenueFragment extends Fragment {
 
     private View view;
 
-    private MetaballView viewPager;
+    private MetaballView viewPager; // 运动类型
 
-    private KannerView kannView;
+    private KannerView kannView; //广告页
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView; //场馆列表
 
     private CustomSwipeToRefresh customSwipeToRefresh;
 
     private int page;
 
+    private HomeData homeData;
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                homeData = (HomeData) msg.obj;
+                findView();
+                initView();
+            }
+        }
+    };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_venue, null);
-        findView();
-        initView();
+        new Asyn_GetHomeData(mHandler).execute();
         return view;
     }
 
@@ -76,7 +92,6 @@ public class VenueFragment extends Fragment {
         viewPager = (MetaballView) view.findViewById(R.id.page_image);
         customSwipeToRefresh = (CustomSwipeToRefresh) view.findViewById(R.id.swipe_refresh);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-
     }
 
     /**
@@ -125,23 +140,23 @@ public class VenueFragment extends Fragment {
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.RecyclerView_space);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(getContext(), getDate()));
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(getContext(), homeData.getStadiums()));
     }
 
-    private List<Stadiums> getDate() {
-        Stadiums stadiums = null;
-        List<Stadiums> arr = new ArrayList<Stadiums>();
-        for (int i = 0; i < name.length; i++) {
-            stadiums = new Stadiums();
-            stadiums.setName(name[i]);
-            stadiums.setAddress(address[i]);
-            stadiums.setMoney(money[i]);
-            stadiums.setKm(km[i]);
-            stadiums.setImageUrl(image[i]);
-            arr.add(stadiums);
-        }
-        return arr;
-    }
+//    private List<Stadiums> getDate() {
+//        Stadiums stadiums = null;
+//        List<Stadiums> arr = new ArrayList<Stadiums>();
+//        for (int i = 0; i < name.length; i++) {
+//            stadiums = new Stadiums();
+//            stadiums.setName(name[i]);
+//            stadiums.setAddress(address[i]);
+//            stadiums.setMoney(money[i]);
+//            stadiums.setKm(km[i]);
+//            stadiums.setImageUrl(image[i]);
+//            arr.add(stadiums);
+//        }
+//        return arr;
+//    }
 
     /**
      * 得到所有页数
@@ -198,6 +213,7 @@ public class VenueFragment extends Fragment {
     private View createView(Context mContext, List<SportsType> arr) {
         GridView view = new GridView(mContext);
         view.setNumColumns(5);
+        view.setSelector(new ColorDrawable(Color.TRANSPARENT));
         MyGridViewAdapter adapter = new MyGridViewAdapter(mContext, arr);
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
