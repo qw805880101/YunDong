@@ -25,5 +25,14 @@
     <string name="rg_password2_hint">请再次输入密码</string>
     <string name="rg_next">下一步</string>
 
+    <!-- 首页 -->
+    <string name="main_home">首页</string>
+    <string name="main_show">达人秀</string>
+    <string name="main_sports">运动圈</string>
+    <string name="main_my">我的</string>
+    <string name="main_search">输入场馆名称.商圈.地址</string>
+    <string name="main_changdi">推荐场馆</string>
+
+
 
 </resources>

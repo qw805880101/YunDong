@@ -64,15 +64,15 @@ public class MetaballView extends ViewPager {
             int itemHeight = itemWidth / 2;
             int x = (getWidth() - count * itemWidth) / 2;
             int y = getHeight() - itemWidth;
-            int minItemHeight = (int) ((float) itemHeight * 0.8F);
+            int minItemHeight = (int) ((float) itemHeight * 0.5F);
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
             for (int i = 0; i < count; i++) {
                 if (select == i) {
-                    paint.setColor(0xFFbdbdbd);
+                    paint.setColor(0xFF486ba5);
                     canvas.drawCircle(x + itemWidth * i + itemWidth / 2, y, minItemHeight, paint);
                 } else {
-                    paint.setColor(0xFFe6e6e6);
+                    paint.setColor(0xFFababab);
                     canvas.drawCircle(x + itemWidth * i + itemWidth / 2, y, minItemHeight, paint);
                 }
             }

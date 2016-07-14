@@ -15,10 +15,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/main_bottom"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="180px"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
         android:gravity="center_vertical"
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onTabClicked"
-            android:padding="3dp">
+            android:padding="20px">
 
             <ImageView
                 android:id="@+id/ib_weixin"
@@ -40,7 +40,7 @@
                 android:background="#ffffff"
                 android:focusable="false"
                 android:scaleType="centerInside"
-                android:src="@drawable/tab_selector_weixing"/>
+                android:src="@drawable/tab_selector_home"/>
 
             <TextView
                 android:id="@+id/tv_weixin"
@@ -48,10 +48,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ib_weixin"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:text="场馆"
+                android:layout_marginTop="10px"
+                android:text="@string/main_home"
                 android:textColor="#9A9A9A"
-                android:textSize="12sp"/>
+                android:textSize="35px"/>
 
             <TextView
                 android:id="@+id/unread_msg_number"
@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onTabClicked"
-            android:padding="3dp">
+            android:padding="20px">
 
             <ImageView
                 android:id="@+id/ib_contact_list"
@@ -80,7 +80,7 @@
                 android:background="#ffffff"
                 android:focusable="false"
                 android:scaleType="centerInside"
-                android:src="@drawable/tab_selector_tongxunlu"/>
+                android:src="@drawable/tab_selector_show"/>
 
             <TextView
                 android:id="@+id/tv_contact_list"
@@ -88,10 +88,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ib_contact_list"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:text="约练"
+                android:layout_marginTop="10px"
+                android:text="@string/main_show"
                 android:textColor="#9A9A9A"
-                android:textSize="12sp"/>
+                android:textSize="35px"/>
 
             <TextView
                 android:id="@+id/unread_address_number"
@@ -111,7 +111,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onTabClicked"
-            android:padding="3dp">
+            android:padding="20px">
 
             <ImageView
                 android:id="@+id/ib_find"
@@ -121,7 +121,7 @@
                 android:background="#ffffff"
                 android:focusable="false"
                 android:scaleType="centerInside"
-                android:src="@drawable/tab_selector_faxian"/>
+                android:src="@drawable/tab_selector_sports"/>
 
             <TextView
                 android:id="@+id/tv_find"
@@ -129,10 +129,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ib_find"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:text="运动圈"
+                android:layout_marginTop="10px"
+                android:text="@string/main_sports"
                 android:textColor="#9A9A9A"
-                android:textSize="12sp"/>
+                android:textSize="35px"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -141,7 +141,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onTabClicked"
-            android:padding="3dp">
+            android:padding="20px">
 
             <ImageView
                 android:id="@+id/ib_profile"
@@ -159,11 +159,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ib_profile"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:text="我的"
+                android:layout_marginTop="10px"
+                android:text="@string/main_my"
                 android:textColor="#9A9A9A"
-                android:textSize="12sp"/>
+                android:textSize="35px"/>
         </RelativeLayout>
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>

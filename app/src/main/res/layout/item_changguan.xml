@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="315px"
+                                       android:background="@color/lg_ffffff"
+                                       android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40px"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="35px"
+        android:layout_marginTop="40px"
+        android:src="@mipmap/test"
+        />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20px"
+        android:layout_toRightOf="@id/item_image"
+        >
+
+        <TextView
+            android:id="@+id/tx_km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40px"
+            android:layout_marginRight="80px"
+            android:layout_alignParentRight="true"
+            android:text=">100km"
+            android:textColor="@color/lg_486ba5"
+            android:textSize="34px"
+            />
+
+        <TextView
+            android:id="@+id/tx_changdi_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="星秀足球场星秀"
+            android:textColor="@color/lg_2d2d2d"
+            android:textSize="44px"
+            />
+
+
+        <TextView
+            android:id="@+id/tx_changdi_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tx_changdi_name"
+            android:layout_marginBottom="20px"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="[从化]"
+            android:textColor="@color/lg_535353"
+            android:textSize="34px"
+            />
+
+        <TextView
+            android:id="@+id/tx_changdi_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tx_changdi_address"
+            android:text="￥500"
+            android:textColor="@color/lg_486ba5"
+            android:textSize="34px"
+            />
+
+        <Button
+            android:id="@+id/bt_yuding"
+            android:layout_width="190px"
+            android:layout_height="77px"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/tab_button"
+            android:text="预定"
+            android:layout_marginRight="80px"
+            android:textColor="@color/lg_486ba5"
+            android:textSize="44px"
+            />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

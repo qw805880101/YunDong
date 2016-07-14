@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.tc.yundong.R;
 import com.example.tc.yundong.Util.Utils;
 import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 /**
  * 登录界面
@@ -33,6 +34,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private String password = "";
 
+    private AutoRelativeLayout rl_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
+        rl_title = (AutoRelativeLayout) findViewById(R.id.rl_title);
+        rl_title.setVisibility(View.VISIBLE);
         imbt_back = (ImageButton) findViewById(R.id.bt_title_back);
         imbt_back.setOnClickListener(this);
         tx_title = (TextView) findViewById(R.id.tx_title);
@@ -77,6 +82,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else if (v == imbt_back) {
             this.finish();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        rl_title.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        rl_title.setVisibility(View.GONE);
     }
 
     /**

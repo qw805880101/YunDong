@@ -10,15 +10,18 @@ import android.widget.TextView;
 
 import com.example.tc.yundong.Activity.Venue.VenueFragment;
 import com.example.tc.yundong.R;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Fragment[] fragments;
     private ImageView[] imagebuttons;
     private TextView[] textviews;
-    private VenueFragment homefragment;
-    private VenueFragment contactlistfragment;
-    private VenueFragment findfragment;
-    private VenueFragment profilefragment;
+    private VenueFragment homeFragment;
+    private VenueFragment showFragment;
+    private VenueFragment sportsFragment;
+    private VenueFragment myFragment;
+
+    private AutoRelativeLayout rl_home_title, rl_show_title, rl_sports_title, rl_my_title;
 
     private int index;
     // 当前fragment的index
@@ -35,19 +38,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
     }
 
-    private void initFragment(){
+    private void initFragment() {
         //初始化 各个模块
-        homefragment = new VenueFragment();
-        contactlistfragment = new VenueFragment();
-        findfragment = new VenueFragment();
-        profilefragment = new VenueFragment();
-        fragments = new Fragment[]{homefragment, contactlistfragment,
-                findfragment, profilefragment};
+        homeFragment = new VenueFragment();
+        showFragment = new VenueFragment();
+        sportsFragment = new VenueFragment();
+        myFragment = new VenueFragment();
+        fragments = new Fragment[]{homeFragment, showFragment,
+                sportsFragment, myFragment};
     }
 
-    private void initTitleBar(){
-        textView = (TextView) findViewById(R.id.tx_title);
+    private void initTitleBar() {
+        rl_home_title = (AutoRelativeLayout) findViewById(R.id.rl_main_home_title);
+        rl_home_title.setVisibility(View.VISIBLE);
 
+        textView = (TextView) findViewById(R.id.tx_title);
     }
 
     private void init() {
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
         textviews[2] = (TextView) findViewById(R.id.tv_find);
         textviews[3] = (TextView) findViewById(R.id.tv_profile);
-        textviews[0].setTextColor(0xFF45C01A);
+        textviews[0].setTextColor(0xFF486BA5);
         findViewById(R.id.re_weixin).setOnClickListener(this);
         findViewById(R.id.re_contact_list).setOnClickListener(this);
         findViewById(R.id.re_find).setOnClickListener(this);
@@ -71,12 +76,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.realtabcontent, homefragment)
-                .add(R.id.realtabcontent, contactlistfragment)
-                .add(R.id.realtabcontent, profilefragment)
-                .add(R.id.realtabcontent, findfragment)
-                .hide(contactlistfragment).hide(profilefragment)
-                .hide(findfragment).show(homefragment).commit();
+                .add(R.id.realtabcontent, homeFragment)
+                .add(R.id.realtabcontent, showFragment)
+                .add(R.id.realtabcontent, sportsFragment)
+                .add(R.id.realtabcontent, myFragment)
+                .hide(showFragment).hide(sportsFragment)
+                .hide(myFragment).show(homeFragment).commit();
     }
 
     public void onTabClicked() {
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 把当前tab设为选中状态
         imagebuttons[index].setSelected(true);
         textviews[currentTabIndex].setTextColor(0xFF999999);
-        textviews[index].setTextColor(0xFF45C01A);
+        textviews[index].setTextColor(0xFF486BA5);
         currentTabIndex = index;
     }
 
@@ -103,9 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.re_weixin:
                 index = 0;
+                rl_home_title.setVisibility(View.VISIBLE);
                 break;
             case R.id.re_contact_list:
                 index = 1;
+                rl_home_title.setVisibility(View.GONE);
                 break;
             case R.id.re_find:
                 index = 2;

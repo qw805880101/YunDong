@@ -4,52 +4,110 @@
                                        android:layout_height="150px"
                                        android:background="@color/lg_584f60">
 
-    <ImageButton
-        android:id="@+id/bt_title_back"
-        android:layout_width="150px"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:background="@null"
-        android:gravity="center"
-        android:src="@mipmap/to_left"
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/tx_title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="@color/lg_ffffff"
-        android:textSize="50px"
-        android:visibility="gone"
-        />
 
     <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/rl_city"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
 
-        <TextView
-            android:id="@+id/tx_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="上海"
-            android:textSize="50px"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/tx_city"
+        <ImageButton
+            android:id="@+id/bt_title_back"
+            android:layout_width="150px"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:gravity="center"
             android:src="@mipmap/to_left"
             />
+
+        <TextView
+            android:id="@+id/tx_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/lg_ffffff"
+            android:textSize="50px"
+            />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_main_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rl_city"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tx_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"
+                android:text="上海"
+                android:textColor="@color/lg_ffffff"
+                android:textSize="44px"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10px"
+                android:layout_toRightOf="@id/tx_city"
+                android:src="@mipmap/to_bottom"
+                />
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <ImageButton
+            android:id="@+id/ibt_news"
+            android:layout_width="150px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:gravity="center"
+            android:src="@mipmap/news"
+            />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/rl_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="35px"
+            android:layout_marginRight="40px"
+            android:layout_marginTop="20px"
+            android:layout_toLeftOf="@id/ibt_news"
+            android:layout_toRightOf="@id/rl_city"
+            android:background="@drawable/tab_search"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50px"
+                android:src="@mipmap/search"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15px"
+                android:text="@string/main_search"
+                android:textColor="@color/lg_aaa3b0"
+                android:textSize="44px"
+                />
+
+        </com.zhy.autolayout.AutoLinearLayout>
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
