@@ -1,44 +1,31 @@
 package com.example.tc.yundong.Activity.Venue;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import com.example.tc.yundong.Adapter.MyGridViewAdapter;
-import com.example.tc.yundong.Adapter.MyPagerAdapter;
 import com.example.tc.yundong.Adapter.MyRecyclerViewAdapter;
+import com.example.tc.yundong.Adapter.OnItemClickLitener;
 import com.example.tc.yundong.Async.Asyn_GetHomeData;
 import com.example.tc.yundong.JavaBeen.HomeData;
-import com.example.tc.yundong.JavaBeen.SportsType;
-import com.example.tc.yundong.JavaBeen.Stadiums;
 import com.example.tc.yundong.R;
 import com.example.tc.yundong.Util.SpacesItemDecoration;
 import com.example.tc.yundong.Util.Utils;
 import com.example.tc.yundong.View.CustomSwipeToRefresh;
-import com.example.tc.yundong.View.KannerView;
-import com.example.tc.yundong.View.MetaballView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 /**
  * Created by tc on 2016/7/12.
  */
-public class VenueFragment extends Fragment {
+public class VenueFragment extends Fragment implements OnItemClickLitener {
 
     private String[] sportsName = {"羽毛球", "篮球", "足球", "网球", "游泳", "游泳"};
     private int[] sportsImage = {R.mipmap.badminton, R.mipmap.basketball, R.mipmap.football, R.mipmap.baseball, R
@@ -55,15 +42,9 @@ public class VenueFragment extends Fragment {
 
     private View view;
 
-    private MetaballView viewPager; // 运动类型
-
-    private KannerView kannView; //广告页
-
     private RecyclerView recyclerView; //场馆列表
 
     private CustomSwipeToRefresh customSwipeToRefresh;
-
-    private int page;
 
     private HomeData homeData;
 
@@ -88,8 +69,6 @@ public class VenueFragment extends Fragment {
     }
 
     private void findView() {
-        kannView = (KannerView) view.findViewById(R.id.kanner);
-        viewPager = (MetaballView) view.findViewById(R.id.page_image);
         customSwipeToRefresh = (CustomSwipeToRefresh) view.findViewById(R.id.swipe_refresh);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
     }
@@ -98,148 +77,63 @@ public class VenueFragment extends Fragment {
      * 初始化
      */
     private void initView() {
-        kannView.setFocusable(true);
-        kannView.setImagesRes(kanners);
-        kannView.setOnItemClickListener(new KannerView.OnItemClickListener() {
-            @Override
-            public void click(View v, int id) { //kanner——Item点击
-
-            }
-        });
 
         customSwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() { // 刷新
-
+                customSwipeToRefresh.setRefreshing(false);
             }
         });
 
-        /* 加载数据 */
-        List<View> views = getAllView(getContext(), getAllDate());
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getContext(), views);
-        viewPager.setAdapter(myPagerAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onPageSelected(int position) {
-                page = position;
-            }
-
-            @Override
-            public void onPageScrolled(int position, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int position) {
-
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager mLayoutManager = recyclerView.getLayoutManager();
+                int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                int totalItemCount = mLayoutManager.getItemCount();
+                //最后一项显示且是下滑的时候调用加载
+                if (lastVisibleItem >= totalItemCount - 1 && dy > 0) {
+                    //需要自己设置排除多次重复调用
+                    Utils.Log("要加载了。");
+                    return;
+                }
             }
         });
+
+        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getContext(), homeData
+                .getStadiums());
+        myRecyclerViewAdapter.setOnItemClickLitener(this);
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration
+                (myRecyclerViewAdapter); //绑定之前的adapter
+
+        myRecyclerViewAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });  //刷新数据的时候回刷新头部
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.RecyclerView_space);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(getContext(), homeData.getStadiums()));
+        recyclerView.addItemDecoration(headersDecor);
+        recyclerView.setAdapter(myRecyclerViewAdapter);
     }
 
-//    private List<Stadiums> getDate() {
-//        Stadiums stadiums = null;
-//        List<Stadiums> arr = new ArrayList<Stadiums>();
-//        for (int i = 0; i < name.length; i++) {
-//            stadiums = new Stadiums();
-//            stadiums.setName(name[i]);
-//            stadiums.setAddress(address[i]);
-//            stadiums.setMoney(money[i]);
-//            stadiums.setKm(km[i]);
-//            stadiums.setImageUrl(image[i]);
-//            arr.add(stadiums);
-//        }
-//        return arr;
-//    }
 
-    /**
-     * 得到所有页数
-     *
-     * @return
-     */
-    private int getAllPages() {
-        int totleSize = 0;
-        List<SportsType> allDate = getAllDate();
-        if (!allDate.isEmpty()) {
-            int sizes = allDate.size() / 5;
-            int size = allDate.size() % 5;
-            if (sizes == 0 && size > 0) {
-                totleSize = 1;
-            } else if (sizes > 0 && size == 0) {
-                totleSize = sizes;
-            } else {
-                totleSize = sizes + 1;
-            }
+    @Override
+    public void onItemClick(View view, int position, int viewType) {
+        if (viewType == MyRecyclerViewAdapter.ITEM_VIEW) {
+            Utils.Toast("ItemPosition = " + position);
+        } else if (viewType == MyRecyclerViewAdapter.GRID_VIEW) {
+            Utils.Toast("GridViewPosition = " + position);
         }
-        return totleSize;
     }
 
-    /**
-     * 得到所有界面
-     *
-     * @param mContext
-     * @param arrs
-     * @return
-     */
-    private List<View> getAllView(Context mContext, List<SportsType> arrs) {
-        List<View> views = new ArrayList<View>();
-        int allPages = getAllPages();
-        for (int i = 0; i < allPages; i++) {
-            List<SportsType> arr = new ArrayList<SportsType>();
-            for (int j = 5 * i; j < 5 * (i + 1); j++) {
-                if (j < arrs.size()) {
-                    arr.add(arrs.get(j));
-                }
-            }
-            View view = createView(mContext, arr);
-            views.add(view);
-        }
-        return views;
-    }
+    @Override
+    public void onItemLongClick(View view, int position) {
 
-    /**
-     * 创建每个界面
-     *
-     * @param mContext
-     * @param arr
-     * @return
-     */
-    private View createView(Context mContext, List<SportsType> arr) {
-        GridView view = new GridView(mContext);
-        view.setNumColumns(5);
-        view.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        MyGridViewAdapter adapter = new MyGridViewAdapter(mContext, arr);
-        view.setAdapter(adapter);
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Utils.Toast("position = " + (page * 5 + position));
-            }
-        });
-        return view;
     }
-
-    /**
-     * 得到所有数据,暂时模拟数据，项目中自己设置数据源和List集合类型
-     *
-     * @return
-     */
-    private List<SportsType> getAllDate() {
-        SportsType sportsType = null;
-        List<SportsType> arr = new ArrayList<SportsType>();
-        for (int i = 0; i < sportsName.length; i++) {
-            sportsType = new SportsType();
-            sportsType.setSportsName(sportsName[i]);
-            sportsType.setSportsImage(sportsImage[i]);
-            arr.add(sportsType);
-        }
-        return arr;
-    }
-
 }

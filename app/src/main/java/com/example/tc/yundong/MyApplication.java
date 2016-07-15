@@ -26,6 +26,7 @@ public class MyApplication extends Application {
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
+    private double lat, lon; //纬度 , 经度
 
     @Override
     public void onCreate() {
@@ -76,10 +77,9 @@ public class MyApplication extends Application {
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
             if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-                Utils.Toast("当前城市：" + location.getCity());
+                location(location);
             } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                //运营商信息
-                Utils.Toast("当前城市：" + location.getCity());
+                location(location);
             } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
                 Utils.Toast("当前城市：" + location.getCity());
             } else if (location.getLocType() == BDLocation.TypeServerError) {
@@ -93,5 +93,27 @@ public class MyApplication extends Application {
             }
             mLocationClient.stop();
         }
+    }
+
+    private void location(BDLocation location) {
+        Utils.Toast("当前城市：" + location.getCity());
+        this.setLat(location.getLatitude());
+        this.setLon(location.getLongitude());
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 }

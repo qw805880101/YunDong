@@ -8,71 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.tc.yundong.View.MyScrollView
-            android:id="@+id/my_scroll"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.zhy.autolayout.AutoRelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="659px"
-                    android:layout_marginTop="30px">
-
-                    <com.example.tc.yundong.View.KannerView
-                        android:id="@+id/kanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
-                </com.zhy.autolayout.AutoRelativeLayout>
-
-                <com.example.tc.yundong.View.MetaballView
-                    android:id="@+id/page_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="230px"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="20px"
-                    android:background="@color/lg_ffffff"
-                    android:paddingTop="30px"
-                    />
-
-                <com.zhy.autolayout.AutoRelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="125px"
-                    android:background="@color/lg_ffffff"
-                    android:gravity="center_vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="95px"
-                        android:text="@string/main_changdi"
-                        android:textColor="@color/lg_486ba5"
-                        android:textSize="44px"
-                        />
-
-                </com.zhy.autolayout.AutoRelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/lg_d1d1d1"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </com.zhy.autolayout.AutoLinearLayout>
-        </com.example.tc.yundong.View.MyScrollView>
-
+            />
     </com.example.tc.yundong.View.CustomSwipeToRefresh>
 
 </com.zhy.autolayout.AutoLinearLayout>
