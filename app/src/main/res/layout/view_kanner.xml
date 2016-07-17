@@ -9,7 +9,7 @@
         android:layout_height="659px"
         android:layout_marginTop="30px">
 
-        <com.example.tc.yundong.View.KannerView
+        <com.example.tc.yundong.View.BannerView
             android:id="@+id/kanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

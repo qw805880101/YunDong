@@ -26,7 +26,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KannerView extends FrameLayout implements OnClickListener {
+public class BannerView extends FrameLayout implements OnClickListener {
     private int count;
     private ImageLoader mImageLoader;
     private List<View> imageViews;
@@ -40,18 +40,18 @@ public class KannerView extends FrameLayout implements OnClickListener {
     private OnItemClickListener mItemClickListener;
 
 
-    public KannerView(Context context, AttributeSet attrs, int defStyle) {
+    public BannerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
         initImageLoader(context);
         initData();
     }
 
-    public KannerView(Context context, AttributeSet attrs) {
+    public BannerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public KannerView(Context context) {
+    public BannerView(Context context) {
         this(context, null);
     }
 
@@ -74,7 +74,7 @@ public class KannerView extends FrameLayout implements OnClickListener {
 
     private void initLayout() {
         imageViews.clear();
-        View view = LayoutInflater.from(context).inflate(R.layout.kanner_layout, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.banner_layout, this, true);
         vp = (ViewPager) view.findViewById(R.id.vp);
         ll_dot = (LinearLayout) view.findViewById(R.id.ll_dot);
         ll_dot.removeAllViews();
@@ -124,7 +124,7 @@ public class KannerView extends FrameLayout implements OnClickListener {
 //        iv_dots.get(0).setImageResource(R.drawable.dot_focus);
 
         for (int i = 0; i <= count + 1; i++) {
-            View view = inflate(context, R.layout.kanner_items, null);
+            View view = inflate(context, R.layout.banner_items, null);
             ImageView iv = (ImageView) view.findViewById(R.id.image_banner_items);
 //            TextView tv = (TextView) view.findViewById(R.id.tx_banner_items);
             iv.setBackgroundResource(R.mipmap.kanner_1);
@@ -166,6 +166,10 @@ public class KannerView extends FrameLayout implements OnClickListener {
         handler.postDelayed(task, 2000);
     }
 
+    public boolean getStatus(){
+        return this.isAutoPlay;
+    }
+
     public void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
@@ -182,9 +186,11 @@ public class KannerView extends FrameLayout implements OnClickListener {
             if (isAutoPlay) {
                 currentItem = currentItem % (count + 1) + 1;
                 if (currentItem == 1) {
+                    Utils.Log("currentItem == 1");
                     vp.setCurrentItem(currentItem, false);
                     handler.post(task);
                 } else {
+                    Utils.Log("currentItem != 1");
                     vp.setCurrentItem(currentItem);
                     handler.postDelayed(task, 3000);
                 }

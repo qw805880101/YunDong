@@ -7,8 +7,26 @@ import java.util.List;
  */
 public class HomeData {
 
+    private int status; // 1 成功  0 失败
+    private String msg; // 返回日志
     List<StartPicture> startPicture;
     List<Stadiums> stadiums;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public List<Stadiums> getStadiums() {
         return stadiums;

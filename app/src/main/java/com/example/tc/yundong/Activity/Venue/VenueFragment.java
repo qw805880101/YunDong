@@ -15,12 +15,17 @@ import android.view.ViewGroup;
 import com.example.tc.yundong.Adapter.MyRecyclerViewAdapter;
 import com.example.tc.yundong.Adapter.OnItemClickLitener;
 import com.example.tc.yundong.Async.Asyn_GetHomeData;
+import com.example.tc.yundong.Async.Asyn_GetVenuesList;
 import com.example.tc.yundong.JavaBeen.HomeData;
+import com.example.tc.yundong.JavaBeen.VenuesList;
 import com.example.tc.yundong.R;
 import com.example.tc.yundong.Util.SpacesItemDecoration;
 import com.example.tc.yundong.Util.Utils;
 import com.example.tc.yundong.View.CustomSwipeToRefresh;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tc on 2016/7/12.
@@ -48,13 +53,26 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
 
     private HomeData homeData;
 
+    private VenuesList venuesList;
+
+    private boolean isUpDate = true;
+
+    private int page = 2;
+    private int rows = 4;
+
+    MyRecyclerViewAdapter myRecyclerViewAdapter;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0) {
+            if (msg.what == 0) { // 首页数据
                 homeData = (HomeData) msg.obj;
                 findView();
                 initView();
+            } else if(msg.what == 1){ //场馆列表
+                venuesList = (VenuesList) msg.obj;
+                myRecyclerViewAdapter.upDate(venuesList.getData());
+                isUpDate = true;
             }
         }
     };
@@ -96,13 +114,21 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
                 if (lastVisibleItem >= totalItemCount - 1 && dy > 0) {
                     //需要自己设置排除多次重复调用
                     Utils.Log("要加载了。");
+                    if (isUpDate) { //要更新
+                        isUpDate = false;
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("page", "" + page);
+                        map.put("rows", "" + rows);
+                        new Asyn_GetVenuesList(map, mHandler).execute();
+                    } else { //不更新
+
+                    }
                     return;
                 }
             }
         });
 
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getContext(), homeData
-                .getStadiums());
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(getContext(), homeData);
         myRecyclerViewAdapter.setOnItemClickLitener(this);
         final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration
                 (myRecyclerViewAdapter); //绑定之前的adapter
