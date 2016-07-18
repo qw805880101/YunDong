@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tc.yundong.JavaBeen.HomeData;
@@ -25,8 +25,8 @@ import com.example.tc.yundong.Util.Info;
 import com.example.tc.yundong.Util.Utils;
 import com.example.tc.yundong.View.BannerView;
 import com.example.tc.yundong.View.MetaballView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Created by tc on 2016/7/14.
  */
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> implements
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
         StickyRecyclerHeadersAdapter {
 
     public final static int ITEM1 = 0;
@@ -82,23 +82,41 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         this.onItemClickLitener = onItemClickLitener;
     }
 
+    /**
+     * 加载
+     *
+     * @param stadiumsList
+     */
     public void upDate(List<Stadiums> stadiumsList) {
         for (Stadiums st : stadiumsList) {
+            Utils.Log("st = " + st.getName());
             this.stadiumsList.add(st);
         }
-        notifyItemChanged(1);
+        for (Stadiums st : this.stadiumsList) {
+            Utils.Log("st = " + st.getName());
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 刷新
+     */
+    public void Refresh(HomeData homeData) {
+        this.stadiumsList = homeData.getStadiums();
+        notifyDataSetChanged();
     }
 
     @Override
-    public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = null;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder holder = null;
         if (viewType == ITEM1) {
-            holder = new ViewHolder(View.inflate(mContext, R.layout.recyclerview_item_1, null), viewType);
+            holder = new Item1ViewHolder(View.inflate(mContext, R.layout.recyclerview_item_1, null));
         } else {
-            holder = new ViewHolder(View.inflate(mContext, R.layout.item_stadium, null), viewType);
+            holder = new Item2ViewHolder(View.inflate(mContext, R.layout.item_stadium, null));
         }
         return holder;
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -106,104 +124,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             return ITEM1;
         } else {
             return ITEM2;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(final MyRecyclerViewAdapter.ViewHolder holder, int position) {
-        if (holder.viewType == ITEM1) {
-            if (holder.kannView.getStatus()) {
-//                return;
-                Utils.Log("轮播已经开启~~~~~~~~~~~~~~~~~~");
-            } else {
-                StartPicture startPicture = null;
-                String pictureUrls[] = new String[homeData.getStartPicture().size()];
-                for (int i = 0; i < homeData.getStartPicture().size(); i++) {
-                    startPicture = homeData.getStartPicture().get(i);
-                    pictureUrls[i] = Utils.getPhotoUrl(startPicture.getPicture());
-                }
-                holder.kannView.setFocusable(true);
-                holder.kannView.setImagesUrl(pictureUrls, null);
-//            holder.kannView.setImagesRes(kanners);
-                holder.kannView.setOnItemClickListener(new BannerView.OnItemClickListener() {
-                    @Override
-                    public void click(View v, int id) { //kanner——Item点击
-                        Utils.Toast("广告页 = " + id);
-                    }
-                });
-            /* 加载数据 */
-                List<View> views = getAllView(mContext, getAllDate());
-                MyPagerAdapter myPagerAdapter = new MyPagerAdapter(mContext, views);
-                holder.viewPager.setAdapter(myPagerAdapter);
-                holder.viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        page = position;
-                    }
-
-                    @Override
-                    public void onPageScrolled(int position, float arg1, int arg2) {
-
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int position) {
-
-                    }
-                });
-            }
-        } else if (holder.viewType == ITEM2) {
-            Stadiums stadiums = stadiumsList.get(position - 1);
-
-            Utils.Log("stadiums.getName() = " + stadiums.getName() + "|" + position);
-            Utils.Log("stadiums.getLat() = " + stadiums.getLat() + "|" + position);
-            Utils.Log("stadiums.getLon() = " + stadiums.getLon() + "|" + position);
-            holder.tx_stadium_name.setText(stadiums.getName());
-            holder.tx_stadium_address.setText("[" + stadiums.getAddress() + "]");
-            holder.tx_stadium_money.setText("￥" + stadiums.getAvgprice());
-
-            if (stadiums.getOrgprice() != 0) {
-                holder.tx_stadium_oldmoney.setText("￥" + stadiums.getOrgprice());
-                holder.tx_stadium_oldmoney.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);//
-                // 设置中划线并加清晰
-            } else {
-                holder.tx_stadium_oldmoney.setText("");
-            }
-            if (stadiums.getLat() != 0 && stadiums.getLon() != 0) {
-                double km = Utils.getDistance(Info.myApp.getLat(), Info.myApp.getLon(), stadiums.getLat(), stadiums
-                        .getLon());
-                holder.tx_km.setText(km + "km");
-            } else {
-                holder.tx_km.setText("");
-            }
-
-            Info.myApp.getLat();
-            ImageLoader.getInstance().displayImage(Utils.getPhotoUrl(stadiums.getPic()), holder.stadiumIamge, options1);
-            holder.bt_yuding.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            if (onItemClickLitener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int pos = holder.getLayoutPosition();
-                        onItemClickLitener.onItemClick(holder.itemView, pos, ITEM_VIEW);
-                    }
-                });
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        int pos = holder.getLayoutPosition();
-                        onItemClickLitener.onItemClick(holder.itemView, pos, ITEM_VIEW);
-                        return false;
-                    }
-                });
-            }
         }
     }
 
@@ -231,7 +151,114 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return homeData.getStadiums().size();
+        return stadiumsList.size() + 1;
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        if (holder instanceof Item1ViewHolder) {
+
+            Item1ViewHolder viewHolder = (Item1ViewHolder) holder;
+
+            Utils.Log("轮播状态~~~~~~~~~~~~~~~~~~" + viewHolder.kannView.getStatus());
+            if (viewHolder.kannView.getStatus()) {
+//                return;
+                Utils.Log("轮播已经开启~~~~~~~~~~~~~~~~~~");
+            } else {
+                StartPicture startPicture = null;
+                String pictureUrls[] = new String[homeData.getStartPicture().size()];
+                for (int i = 0; i < homeData.getStartPicture().size(); i++) {
+                    startPicture = homeData.getStartPicture().get(i);
+                    pictureUrls[i] = Utils.getPhotoUrl(startPicture.getPicture());
+                }
+                viewHolder.kannView.setFocusable(true);
+                viewHolder.kannView.setImagesUrl(pictureUrls, null);
+//            viewHolder.kannView.setImagesRes(kanners);
+                viewHolder.kannView.setOnItemClickListener(new BannerView.OnItemClickListener() {
+                    @Override
+                    public void click(View v, int id) { //kanner——Item点击
+                        Utils.Toast("广告页 = " + id);
+                    }
+                });
+            /* 加载数据 */
+                List<View> views = getAllView(mContext, getAllDate());
+                MyPagerAdapter myPagerAdapter = new MyPagerAdapter(mContext, views);
+                viewHolder.viewPager.setAdapter(myPagerAdapter);
+                viewHolder.viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        page = position;
+                    }
+
+                    @Override
+                    public void onPageScrolled(int position, float arg1, int arg2) {
+
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int position) {
+
+                    }
+                });
+            }
+
+        } else if (holder instanceof Item2ViewHolder) {
+            Item2ViewHolder viewHolder = (Item2ViewHolder) holder;
+
+            Stadiums stadiums = stadiumsList.get(position - 1);
+            Utils.Log("stadiums.getName() = " + stadiums.getName() + "|" + position);
+            Utils.Log("stadiums.getLat() = " + stadiums.getLat() + "|" + position);
+            Utils.Log("stadiums.getLon() = " + stadiums.getLon() + "|" + position);
+            viewHolder.tx_stadium_name.setText(stadiums.getName());
+            viewHolder.tx_stadium_address.setText("[" + stadiums.getAddress() + "]");
+            viewHolder.tx_stadium_money.setText("￥" + stadiums.getAvgprice());
+
+            if (stadiums.getOrgprice() != 0) {
+                viewHolder.tx_stadium_oldmoney.setText("￥" + stadiums.getOrgprice());
+                viewHolder.tx_stadium_oldmoney.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);//
+                // 设置中划线并加清晰
+            } else {
+                viewHolder.tx_stadium_oldmoney.setText("");
+            }
+
+            if (stadiums.getLat() != 0 && stadiums.getLon() != 0) {
+                double km = Utils.getDistance(Info.myApp.getLat(), Info.myApp.getLon(), stadiums.getLat(), stadiums
+                        .getLon());
+                viewHolder.tx_km.setText(km + "km");
+            } else {
+                viewHolder.tx_km.setText("");
+            }
+//            ImageLoader.getInstance().displayImage(Utils.getPhotoUrl(stadiums.getPic()), viewHolder.stadiumIamge,
+//                    options1);
+
+            viewHolder.stadiumIamge.setImageURI(Uri.parse(Utils.getPhotoUrl(stadiums.getPic())));
+            viewHolder.bt_yuding.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            if (onItemClickLitener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos = holder.getLayoutPosition();
+                        onItemClickLitener.onItemClick(holder.itemView, pos, ITEM_VIEW);
+                    }
+                });
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int pos = holder.getLayoutPosition();
+                        onItemClickLitener.onItemClick(holder.itemView, pos, ITEM_VIEW);
+                        return false;
+                    }
+                });
+            }
+        }
     }
 
     /**
@@ -239,6 +266,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
      *
      * @return
      */
+
     private int getAllPages() {
         int totleSize = 0;
         List<SportsType> allDate = getAllDate();
@@ -327,8 +355,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView stadiumIamge;
+    static class Item1ViewHolder extends RecyclerView.ViewHolder {
+        MetaballView viewPager; // 运动类型
+        BannerView kannView; //广告页
+
+        public Item1ViewHolder(View itemView) {
+            super(itemView);
+            AutoUtils.autoSize(itemView);
+            kannView = (BannerView) itemView.findViewById(R.id.kanner);
+            viewPager = (MetaballView) itemView.findViewById(R.id.page_image);
+        }
+    }
+
+    static class Item2ViewHolder extends RecyclerView.ViewHolder {
+        SimpleDraweeView  stadiumIamge;
         TextView tx_stadium_name;
         TextView tx_stadium_address;
         TextView tx_stadium_money;
@@ -336,28 +376,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         TextView tx_stadium_oldmoney;
         Button bt_yuding;
 
-        MetaballView viewPager; // 运动类型
-
-        BannerView kannView; //广告页
-
-        int viewType;
-
-        public ViewHolder(View itemView, int viewType) {
+        public Item2ViewHolder(View itemView) {
             super(itemView);
             AutoUtils.autoSize(itemView);
-            if (viewType == ITEM1) {
-                kannView = (BannerView) itemView.findViewById(R.id.kanner);
-                viewPager = (MetaballView) itemView.findViewById(R.id.page_image);
-            } else if (viewType == ITEM2) {
-                stadiumIamge = (ImageView) itemView.findViewById(R.id.item_stadium_image);
-                tx_stadium_name = (TextView) itemView.findViewById(R.id.tx_stadium_name);
-                tx_stadium_address = (TextView) itemView.findViewById(R.id.tx_stadium_address);
-                tx_stadium_money = (TextView) itemView.findViewById(R.id.tx_stadium_money);
-                tx_stadium_oldmoney = (TextView) itemView.findViewById(R.id.tx_stadium_oldmoney);
-                tx_km = (TextView) itemView.findViewById(R.id.tx_km);
-                bt_yuding = (Button) itemView.findViewById(R.id.bt_yuding);
-            }
-            this.viewType = viewType;
+            stadiumIamge = (SimpleDraweeView) itemView.findViewById(R.id.item_stadium_image);
+            tx_stadium_name = (TextView) itemView.findViewById(R.id.tx_stadium_name);
+            tx_stadium_address = (TextView) itemView.findViewById(R.id.tx_stadium_address);
+            tx_stadium_money = (TextView) itemView.findViewById(R.id.tx_stadium_money);
+            tx_stadium_oldmoney = (TextView) itemView.findViewById(R.id.tx_stadium_oldmoney);
+            tx_km = (TextView) itemView.findViewById(R.id.tx_km);
+            bt_yuding = (Button) itemView.findViewById(R.id.bt_yuding);
         }
     }
 }

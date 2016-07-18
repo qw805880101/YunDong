@@ -7,9 +7,9 @@ import java.util.List;
  */
 public class VenuesList {
 
-    private int total;
+    private int total; //总条数
     private int status; //状态 1成功 0 失败
-    private int page;
+    private int page; //当前页
     private List<Stadiums> data;
     private String msg;
 

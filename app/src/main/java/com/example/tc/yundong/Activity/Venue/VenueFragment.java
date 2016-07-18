@@ -56,9 +56,12 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
     private VenuesList venuesList;
 
     private boolean isUpDate = true;
+    private boolean isRef = false;
 
     private int page = 2;
-    private int rows = 4;
+    private int rows;
+
+    private int allPage;
 
     MyRecyclerViewAdapter myRecyclerViewAdapter;
 
@@ -67,11 +70,23 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
         public void handleMessage(Message msg) {
             if (msg.what == 0) { // 首页数据
                 homeData = (HomeData) msg.obj;
-                findView();
-                initView();
-            } else if(msg.what == 1){ //场馆列表
+                if (isRef) { // 刷新数据
+                    myRecyclerViewAdapter.Refresh(homeData);
+                } else { //加载首页
+                    if (homeData.getTotal() % 10 != 0) {
+                        allPage = homeData.getTotal() / 10 + 1;
+                    } else {
+                        allPage = homeData.getTotal() / 10;
+                    }
+                    Utils.Log("allPage = " + allPage);
+                    findView();
+                    initView();
+                }
+                rows = homeData.getRows();
+            } else if (msg.what == 1) { //加载场馆列表
                 venuesList = (VenuesList) msg.obj;
                 myRecyclerViewAdapter.upDate(venuesList.getData());
+                page++;
                 isUpDate = true;
             }
         }
@@ -100,6 +115,8 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
             @Override
             public void onRefresh() { // 刷新
                 customSwipeToRefresh.setRefreshing(false);
+                new Asyn_GetHomeData(mHandler).execute();
+                isRef = true;
             }
         });
 
@@ -116,10 +133,12 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
                     Utils.Log("要加载了。");
                     if (isUpDate) { //要更新
                         isUpDate = false;
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("page", "" + page);
-                        map.put("rows", "" + rows);
-                        new Asyn_GetVenuesList(map, mHandler).execute();
+                        if (page <= allPage) {
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("page", "" + page);
+                            map.put("rows", "" + rows);
+                            new Asyn_GetVenuesList(map, mHandler).execute();
+                        }
                     } else { //不更新
 
                     }
@@ -161,5 +180,17 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
     @Override
     public void onItemLongClick(View view, int position) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Utils.Log("onResume" + myRecyclerViewAdapter.getBanner().getStatus());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        Utils.Log("onStop" + myRecyclerViewAdapter.getBanner().getStatus());
     }
 }

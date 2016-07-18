@@ -9,8 +9,27 @@ public class HomeData {
 
     private int status; // 1 成功  0 失败
     private String msg; // 返回日志
+    private int rows;
+    private int total; //总条数
+
     List<StartPicture> startPicture;
     List<Stadiums> stadiums;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
 
     public String getMsg() {
         return msg;

@@ -159,6 +159,7 @@ public class Utils {
      */
     public static String getPhotoUrl(String url) {
         String photoUrl = "http://114.55.42.10:9000/ptcent_file_upload/sportsweb" + url;
+        Utils.Log("photoUrl = " + photoUrl);
         return photoUrl;
     }
 
