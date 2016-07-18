@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/view_title" />
-
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"
+        android:background="@color/Gray100"
         android:layout_height="0dp"
         android:layout_weight="1" />
 

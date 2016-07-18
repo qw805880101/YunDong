@@ -317,7 +317,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private View createView(Context mContext, List<SportsType> arr) {
         GridView view = new GridView(mContext);
         view.setNumColumns(5);
-        view.setSelector(new ColorDrawable(Color.TRANSPARENT));
+        view.setSelector(new ColorDrawable(Color.GREEN));
         MyGridViewAdapter adapter = new MyGridViewAdapter(mContext, arr);
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -352,6 +352,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
+            AutoUtils.autoSize(itemView);
         }
     }
 

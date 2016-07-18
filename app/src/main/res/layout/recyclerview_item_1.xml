@@ -24,7 +24,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="20px"
         android:background="@color/lg_ffffff"
-        android:paddingTop="30px"
         />
 
 </com.zhy.autolayout.AutoLinearLayout>

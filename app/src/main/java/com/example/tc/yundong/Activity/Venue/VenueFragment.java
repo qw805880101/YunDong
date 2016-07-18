@@ -23,6 +23,7 @@ import com.example.tc.yundong.Util.SpacesItemDecoration;
 import com.example.tc.yundong.Util.Utils;
 import com.example.tc.yundong.View.CustomSwipeToRefresh;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ import java.util.Map;
 /**
  * Created by tc on 2016/7/12.
  */
-public class VenueFragment extends Fragment implements OnItemClickLitener {
+public class VenueFragment extends Fragment implements OnItemClickLitener, View.OnClickListener {
 
     private String[] sportsName = {"羽毛球", "篮球", "足球", "网球", "游泳", "游泳"};
     private int[] sportsImage = {R.mipmap.badminton, R.mipmap.basketball, R.mipmap.football, R.mipmap.baseball, R
@@ -46,6 +47,10 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
             .mipmap.test, R.mipmap.test};
 
     private View view;
+
+    private AutoRelativeLayout rl_home_title;
+
+    private AutoRelativeLayout rl_city;
 
     private RecyclerView recyclerView; //场馆列表
 
@@ -73,16 +78,17 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
                 if (isRef) { // 刷新数据
                     myRecyclerViewAdapter.Refresh(homeData);
                 } else { //加载首页
-                    if (homeData.getTotal() % 10 != 0) {
-                        allPage = homeData.getTotal() / 10 + 1;
-                    } else {
-                        allPage = homeData.getTotal() / 10;
-                    }
                     Utils.Log("allPage = " + allPage);
                     findView();
                     initView();
                 }
                 rows = homeData.getRows();
+                if (homeData.getTotal() % 10 != 0) {
+                    allPage = homeData.getTotal() / 10 + 1;
+                } else {
+                    allPage = homeData.getTotal() / 10;
+                }
+                page = 2;
             } else if (msg.what == 1) { //加载场馆列表
                 venuesList = (VenuesList) msg.obj;
                 myRecyclerViewAdapter.upDate(venuesList.getData());
@@ -104,12 +110,17 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
     private void findView() {
         customSwipeToRefresh = (CustomSwipeToRefresh) view.findViewById(R.id.swipe_refresh);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        rl_home_title = (AutoRelativeLayout) view.findViewById(R.id.rl_main_home_title);
+        rl_home_title.setVisibility(View.VISIBLE);
+        rl_city = (AutoRelativeLayout) view.findViewById(R.id.rl_city);
     }
 
     /**
      * 初始化
      */
     private void initView() {
+
+        rl_city.setOnClickListener(this);
 
         customSwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -192,5 +203,12 @@ public class VenueFragment extends Fragment implements OnItemClickLitener {
     public void onStop() {
         super.onStop();
 //        Utils.Log("onStop" + myRecyclerViewAdapter.getBanner().getStatus());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == rl_city){
+            Utils.Toast("City城市列表");
+        }
     }
 }

@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                     android:layout_width="match_parent"
-                                     android:layout_height="315px"
-                                     android:background="@drawable/item_background_selector_light"
-                                     android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="315px"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/item_background_selector_light"
+    android:orientation="horizontal">
 
-    <ImageView
+    <!--<ImageView-->
+    <!--android:id="@+id/item_stadium_image"-->
+    <!--android:layout_width="400px"-->
+    <!--android:layout_height="240px"-->
+    <!--android:layout_marginBottom="40px"-->
+    <!--android:layout_marginLeft="60px"-->
+    <!--android:layout_marginRight="35px"-->
+    <!--android:layout_marginTop="40px" />-->
+
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_stadium_image"
         android:layout_width="400px"
         android:layout_height="240px"
@@ -13,7 +23,11 @@
         android:layout_marginLeft="60px"
         android:layout_marginRight="35px"
         android:layout_marginTop="40px"
-        />
+        fresco:placeholderImage="@mipmap/test"
+        fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true"
+        fresco:roundedCornerRadius="5dp"
+        fresco:roundingBorderWidth="1dp" />
 
 
     <com.zhy.autolayout.AutoRelativeLayout
@@ -37,7 +51,7 @@
                 android:maxLines="1"
                 android:text="星秀足球场星秀"
                 android:textColor="@color/lg_2d2d2d"
-                android:textSize="44px"/>
+                android:textSize="44px" />
 
             <TextView
                 android:id="@+id/tx_km"
@@ -48,7 +62,7 @@
                 android:gravity="right"
                 android:maxLines="1"
                 android:textColor="@color/lg_486ba5"
-                android:textSize="34px"/>
+                android:textSize="34px" />
 
         </com.zhy.autolayout.AutoLinearLayout>
 
@@ -63,14 +77,13 @@
             android:maxLines="1"
             android:text="[从化]"
             android:textColor="@color/lg_535353"
-            android:textSize="34px"/>
+            android:textSize="34px" />
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tx_stadium_address"
-            android:layout_marginRight="300px"
-            >
+            android:layout_marginRight="300px">
 
             <TextView
                 android:id="@+id/tx_stadium_money"
@@ -78,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="￥500"
                 android:textColor="@color/lg_486ba5"
-                android:textSize="34px"/>
+                android:textSize="34px" />
 
             <TextView
                 android:id="@+id/tx_stadium_oldmoney"
@@ -86,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20px"
                 android:textColor="@color/lg_486ba5"
-                android:textSize="34px"/>
+                android:textSize="34px" />
 
 
         </com.zhy.autolayout.AutoLinearLayout>
@@ -108,7 +121,7 @@
                 android:background="@drawable/tab_button"
                 android:text="预定"
                 android:textColor="@color/lg_486ba5"
-                android:textSize="44px"/>
+                android:textSize="44px" />
         </com.zhy.autolayout.AutoRelativeLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoLinearLayout>

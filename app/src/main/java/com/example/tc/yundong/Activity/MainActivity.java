@@ -21,10 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private VenueFragment sportsFragment;
 //    private VenueFragment myFragment;
 
-    private AutoRelativeLayout rl_home_title, rl_show_title, rl_sports_title, rl_my_title;
-
-    private AutoRelativeLayout rl_city;
-
     private int index;
     // 当前fragment的index
     private int currentTabIndex;
@@ -50,11 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initTitleBar() {
-        rl_home_title = (AutoRelativeLayout) findViewById(R.id.rl_main_home_title);
-        rl_home_title.setVisibility(View.VISIBLE);
         textView = (TextView) findViewById(R.id.tx_title);
-        rl_city = (AutoRelativeLayout) findViewById(R.id.rl_city);
-
     }
 
     private void init() {
@@ -81,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .add(R.id.realtabcontent, homeFragment)
                 .show(homeFragment).commit();
 
-        rl_city.setOnClickListener(this);
     }
 
     public void onTabClicked() {
@@ -108,11 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.rl_home:
                 index = 0;
-                rl_home_title.setVisibility(View.VISIBLE);
                 break;
             case R.id.rl_show:
                 index = 1;
-                rl_home_title.setVisibility(View.GONE);
                 break;
             case R.id.rl_sports:
                 index = 2;
@@ -123,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rl_city:
 
                 break;
-
 
 
         }

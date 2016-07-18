@@ -16,10 +16,10 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="95px"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="@string/main_changdi"
             android:textColor="@color/lg_486ba5"
             android:textSize="44px"
